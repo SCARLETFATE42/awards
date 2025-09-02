@@ -1,5 +1,4 @@
 "use client";
-
 import { cn } from "/lib/utils";
 import {
   createContext,
@@ -33,8 +32,11 @@ export const CardContainer = ({
     if (!containerRef.current) return;
     const { left, top, width, height } =
       containerRef.current.getBoundingClientRect();
-    const x = (e.clientX - left - width / 2) / 25;
-    const y = (e.clientY - top - height / 2) / 25;
+
+    // Reduced tilt intensity by increasing divisor from 25 → 40
+    const x = (e.clientX - left - width / 2) / 60;
+    const y = (e.clientY - top - height / 2) / 60;
+
     containerRef.current.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
   };
 
@@ -55,7 +57,8 @@ export const CardContainer = ({
           "py-20 flex items-center justify-center",
           containerClassName
         )}
-        style={{ perspective: "1000px" }}
+        // Reduced depth effect by increasing perspective from 1000px → 2000px
+        style={{ perspective: "10000px" }}
       >
         <div
           ref={containerRef}
@@ -79,7 +82,7 @@ export const CardBody = ({ children = null, className = "" }) => {
   return (
     <div
       className={cn(
-        "h-96 w-96 [transform-style:preserve-3d] [&>*]:[transform-style:preserve-3d]",
+        "[transform-style:preserve-3d] [&>*]:[transform-style:preserve-3d]",
         className
       )}
     >
@@ -123,7 +126,7 @@ export const CardItem = ({
   return (
     <Tag
       ref={ref}
-      className={cn("w-fit transition duration-200 ease-linear", className)}
+      className={cn("w-full transition duration-200 ease-linear", className)}
       {...rest}
     >
       {children}

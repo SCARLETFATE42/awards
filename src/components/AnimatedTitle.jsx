@@ -10,45 +10,96 @@ const AnimatedTitle = ({ title, containerClass }) => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const titleAnimation = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "100 bottom",
-          end: "center bottom",
-          toggleActions: "play none none reverse",
+      gsap.fromTo(
+        ".animated-letter",
+        {
+          opacity: 0,
+          y: 50,
+          rotateX: 90,
         },
-      });
-
-      titleAnimation.to(".animated-word", {
-        opacity: 1,
-        transform: "translate3d(0,0,0) rotateY(0deg) rotateX(0deg)",
-        ease: "power2.inOut",
-        stagger: 0.02,
-      });
+        {
+          opacity: 1,
+          y: 0,
+          rotateX: 0,
+          ease: "power3.out",
+          stagger: 0.03,
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 80%",
+            end: "bottom 60%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
     }, containerRef);
 
     return () => ctx.revert();
   }, []);
 
+  // Recursive function to wrap each character
+  const renderChars = (node, keyPrefix = "") => {
+    if (typeof node === "string") {
+      return node.split("").map((char, i) => (
+        <span
+          key={`${keyPrefix}-${i}`}
+          className="animated-letter inline-block opacity-0 font-face5"
+        >
+          {char}
+        </span>
+      ));
+    }
+
+    if (!node) return null;
+
+    // Handle <br />
+    if (node.type === "br") {
+      return <br key={`${keyPrefix}-br`} />;
+    }
+
+    // Handle <b>
+    if (node.type === "b") {
+      return (
+        <b key={`${keyPrefix}-b`} className="special-font">
+          {renderChars(node.props.children, `${keyPrefix}-b`)}
+        </b>
+      );
+    }
+
+    // Handle fragments or other elements
+    if (Array.isArray(node)) {
+      return node.map((child, i) => renderChars(child, `${keyPrefix}-${i}`));
+    }
+
+    return renderChars(node.props?.children, `${keyPrefix}-child`);
+  };
+
   return (
     <Box
-      className={`animated-title ${containerClass}`}
       ref={containerRef}
+      className={`animated-title ${containerClass} 
+        w-full 
+        text-center 
+        font-bold 
+        px-3 py-2
+        text-2xl
+        sm:text-3xl
+        md:text-5xl
+        lg:text-7xl
+        leading-tight
+        max-w-full
+        md:max-w-4xl
+        mx-auto
+      `}
     >
-      {title.split("<br />").map((line, index) => (
-        <Box
-          key={index}
-          className="flex-center max-w-full flex-wrap gap-2 px-10 md:gap-3"
-        >
-          {line.split("").map((char, i) => (
-            <span
-              key={i}
-              className="animated-word opacity-0 font-face5"
-              dangerouslySetInnerHTML={{ __html: char }}
-            />
-          ))}
-        </Box>
-      ))}
+      <Box className="
+        flex flex-wrap justify-center 
+        gap-x-1 gap-y-2
+        sm:gap-x-2 sm:gap-y-3
+        md:gap-x-4 md:gap-y-4
+        px-1 sm:px-4 md:px-6
+      ">
+        {renderChars(title)}
+      </Box>
     </Box>
   );
 };

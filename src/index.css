@@ -4,10 +4,13 @@
 @import "tailwindcss";
 
 body {
-  width: 100dvw;
+  width: 100vw;
+  min-height: 100vh;
   overflow-x: hidden;
   background-color: #dfdff0;
   font-family: "General Sans", sans-serif;
+  padding: 0;
+  margin: 0;
 }
 
 @layer base {
@@ -98,6 +101,7 @@ body {
 
   .special-font b {
     font-family: "Zentry";
+    font-weight: 900;
     font-feature-settings: "ss01" on;
   }
 
@@ -105,39 +109,56 @@ body {
     text-transform: uppercase;
     font-family: "zentry", sans-serif;
     font-weight: 900;
-    font-size: 3rem;
-    right: 2.5rem;
+    font-size: 2rem;
+    right: 1rem;
+    bottom: 1rem;
   }
   @media (min-width: 640px) {
     .hero-heading {
       font-size: 4.5rem;
+      right: 2.5rem;
+      bottom: 2.5rem;
     }
   }
   @media (min-width: 768px) {
     .hero-heading {
       font-size: 6rem;
+      right: 3rem;
+      bottom: 3rem;
     }
   }
   @media (min-width: 1024px) {
     .hero-heading {
       font-size: 12rem;
+      right: 5rem;
+      bottom: 5rem;
     }
   }
 
   .about-subtext {
     position: absolute;
-    bottom: -80vh;
+    bottom: -40vh;
     left: 50%;
     width: 100%;
-    max-width: 24rem;
+    max-width: 20rem;
     transform: translateX(-50%);
     text-align: center;
     font-family: "circular-web", sans-serif;
-    font-size: 1.125rem;
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+  @media (min-width: 640px) {
+    .about-subtext {
+      bottom: -60vh;
+      max-width: 24rem;
+      font-size: 1.125rem;
+    }
   }
   @media (min-width: 768px) {
     .about-subtext {
+      bottom: -80vh;
       max-width: 34rem;
+      font-size: 1.25rem;
     }
   }
 
@@ -146,15 +167,22 @@ body {
     left: 50%;
     top: 0;
     z-index: 20;
-    height: 60vh;
-    width: 24rem;
+    height: 40vh;
+    width: 16rem;
     transform: translateX(-50%);
     overflow: hidden;
     border-radius: 1.5rem;
   }
+  @media (min-width: 640px) {
+    .about-image {
+      height: 60vh;
+      width: 24rem;
+    }
+  }
   @media (min-width: 768px) {
     .about-image {
       width: 30vw;
+      height: 60vh;
     }
   }
 
@@ -162,21 +190,30 @@ body {
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
-    font-size: 4.5rem;
+    font-size: 2rem;
     text-transform: uppercase;
-    line-height: 0.8;
+    line-height: 0.9;
     color: #fff;
-    padding-left: 8rem;
-    padding-right: 8rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  @media (min-width: 640px) {
+    .animated-title {
+      font-size: 4.5rem;
+      padding-left: 4rem;
+      padding-right: 4rem;
+    }
   }
   @media (min-width: 768px) {
     .animated-title {
       font-size: 6rem;
+      padding-left: 8rem;
+      padding-right: 8rem;
     }
   }
 
   .animated-word {
-    font-family: "zentry", sans-serif;
+    font-family: "zentry";
     font-weight: 900;
     opacity: 0;
     transform: translate3d(10px, 51px, -60px) rotateY(60deg) rotateX(-40deg);
@@ -204,9 +241,15 @@ body {
 
   .bento-title {
     text-transform: uppercase;
-    font-size: 2.25rem;
+    color: #e0e7ff;
+    font-size: 1.5rem;
     font-weight: 900;
     font-family: "zentry", sans-serif;
+  }
+  @media (min-width: 640px) {
+    .bento-title {
+      font-size: 2.25rem;
+    }
   }
   @media (min-width: 768px) {
     .bento-title {
@@ -216,13 +259,18 @@ body {
 
   .story-img-container {
     position: relative;
-    height: 90vh;
+    height: 50vh;
     width: 100%;
     filter: url("#flt_tag");
   }
+  @media (min-width: 640px) {
+    .story-img-container {
+      height: 90vh;
+    }
+  }
   @media (min-width: 768px) {
     .story-img-container {
-      height: 100dvh;
+      height: 100vh;
     }
   }
 
@@ -247,15 +295,22 @@ body {
   .story-img-content {
     position: absolute;
     width: 100%;
-    height: 50vh;
+    height: 30vh;
     opacity: 1;
-    left: 2.5rem;
-    top: 4rem;
+    left: 1rem;
+    top: 2rem;
     transform: translate3d(0, 0, 0) rotateX(0) rotateY(0) rotateZ(0) scale(1);
+  }
+  @media (min-width: 640px) {
+    .story-img-content {
+      height: 50vh;
+      left: 2.5rem;
+      top: 4rem;
+    }
   }
   @media (min-width: 768px) {
     .story-img-content {
-      height: 100dvh;
+      height: 100vh;
       left: 0;
       top: 2.5rem;
     }
@@ -268,10 +323,16 @@ body {
   }
 
   .gallery-img-container {
-    width: 16rem;
-    height: 16rem;
+    width: 12rem;
+    height: 12rem;
     overflow: hidden;
     background: #c4b5fd;
+  }
+  @media (min-width: 640px) {
+    .gallery-img-container {
+      width: 16rem;
+      height: 16rem;
+    }
   }
 
   .gallery-img {
@@ -282,8 +343,8 @@ body {
 
   .gallery-img-4 {
     border-radius: 0.5rem;
-    width: 25rem;
-    height: 24rem;
+    width: 16rem;
+    height: 14rem;
   }
   @media (min-width: 640px) {
     .gallery-img-4 {
